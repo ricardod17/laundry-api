@@ -1,3 +1,4 @@
+API Laundry dibuat dengan menggunakan
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -7,8 +8,22 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
 
+## About App
+<b>About App</b>
+Aplikasi ini dibuat untuk mendukung proses operasional Laundry, masi terdapat beberapa kekurangan yang dapat dilakukan improvement, aplikasi dibangun dengan Laravel 8.4 dengan PHP 7.X. Aplikasi ini terdapat beberapa module, yaitu :
+- Jasa, CRUD berupa membuat produk seperti Laundry Kiloan beserta harganya.
+- Transaksi, untuk membuat transaksi yang dapat dilakukan oleh pengguna. Admin dapat melakukan update status menjadi Processing.
+- User, untuk dapat melakukan CRUD terhadap User Management yang memiliki Role, dan User
+
+- Login, dapat melakukan login dengan JWT Authentication menggunakan bearer token.
+- Register, dapat melakukan register sebagai member untuk melakukan pemesanan.
+
+Aplikasi masih memiliki kekurangan dari sisi role management karena saya mengalami kesulitan didalam melakukan pemisahan antara middleware dan jwt untuk sistemnya.
+
+
+## About Laravel
+<b>About Laravel</b>
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
