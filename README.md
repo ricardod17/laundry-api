@@ -21,6 +21,11 @@ Aplikasi ini dibuat untuk mendukung proses operasional Laundry, masi terdapat be
 
 Aplikasi masih memiliki kekurangan dari sisi role management karena saya mengalami kesulitan didalam melakukan pemisahan antara middleware dan jwt untuk sistemnya.
 
+<b>How To Run</b>
+- Please setting database connection .env.example
+- Open Using Git Hash
+- PHP artisan migrate
+- PHP artisan serve
 
 ## About Laravel
 <b>About Laravel</b>

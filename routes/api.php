@@ -21,6 +21,13 @@ use App\Http\Controllers\UserController;
 Route::middleware('auth:sanctum')->get('/auth', function (Request $request) {
     return $request->user();
 });
+Route::get('/', function (Request $request) {
+    return response()->json([
+        "success" => true,
+        "message" => "Welcome to Internal API Laundry.",
+    ]);
+}
+);
 
 Route::get('user/auth', [UserController::class, 'getAuthenticatedUser'])->middleware('jwt.verify');
 Route::post('register', [UserController::class, 'register']);
