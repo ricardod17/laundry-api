@@ -30,6 +30,7 @@ Aplikasi masih memiliki kekurangan dari sisi role management karena saya mengala
 - PHP artisan serve
 - go to localhost:8000/api
 - API : Jasa/Transaksi/User
+
 Login / Register :
 - Method POST utk login : localhost:8000/login
 - Method POST utk register : localhost:8000/register
