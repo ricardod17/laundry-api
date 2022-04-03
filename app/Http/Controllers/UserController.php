@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $User = User::orderBy('updated_at', 'DESC')->paginate(5);
+        $User = User::orderBy('id', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
             'data' => $User,
@@ -42,6 +42,8 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'user_role' => $request->get('user_role'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
             ]);
         $User = User::find($id);
         return response()->json([
@@ -56,6 +58,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'phone' => 'required',
+            'address' => 'required',
             'user_role' => 'required',
         ]);
 
@@ -67,6 +71,8 @@ class UserController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'phone' => $request->get('phone'),
+            'address' => $request->get('address'),
             'user_role' => $request->get('user_role'),
         ]);
 
@@ -91,10 +97,14 @@ class UserController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+                return response()->json([
+                    "message" => "Invalid Email or Password.",
+                ],422);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json([
+                "message" => "Failed Create Token.",
+            ],500);
         }
 
         return response()->json(compact('token'));
@@ -106,6 +116,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'phone' => 'required',
+            'address' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -116,6 +128,8 @@ class UserController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'phone' => $request->get('phone'),
+            'address' => $request->get('address'),
             'user_role' => 'member',
         ]);
 
@@ -129,17 +143,22 @@ class UserController extends Controller
         try {
 
             if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
+                return response()->json([
+                    "message" => "User Not Found.",
+                ],404);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
+            return response()->json([
+                "message" => "Token is Expired.",
+            ],403);
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
+            return response()->json([
+                "message" => "Token is Invalid.",
+            ],403);
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
+            return response()->json([
+                "message" => "Token is Absent.",
+            ],403);
         }
 
         return response()->json(compact('user'));

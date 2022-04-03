@@ -22,10 +22,24 @@ Aplikasi ini dibuat untuk mendukung proses operasional Laundry, masi terdapat be
 Aplikasi masih memiliki kekurangan dari sisi role management karena saya mengalami kesulitan didalam melakukan pemisahan antara middleware dan jwt untuk sistemnya.
 
 <b>How To Run</b>
+- Please run mysql on XAMPP
 - Please setting database connection .env.example
 - Open Using Git Hash
 - PHP artisan migrate
+- PHP artisan db:seed
 - PHP artisan serve
+- go to localhost:8000/api
+- API : Jasa/Transaksi/User
+Login / Register :
+- Method POST utk login : localhost:8000/login
+- Method POST utk register : localhost:8000/register
+- Lalu copy authenticated token untuk dapat mengakses module.
+
+Jasa / Transaksi / Users (perlu login):
+- Method GET utk meretrieve data : localhost:8000/api/jasa/1
+- Method POST utk mencreate data : localhost:8000/api/jasa/
+- Method POST utk mengupdate data : localhost:8000/api/jasa/1
+- Method DELETE utk menghapus data : localhost:8000/api/jasa/1
 
 ## About Laravel
 <b>About Laravel</b>

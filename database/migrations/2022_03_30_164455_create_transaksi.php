@@ -14,11 +14,12 @@ class CreateTransaksi extends Migration
     public function up()
     {
         Schema::create('transaksi', function (Blueprint $table) {
-            $table->increments('id_transaksi');
+            $table->increments('id');
             $table->bigInteger('customerid');
             $table->bigInteger('jasaid');
             $table->bigInteger('jlh_item');
             $table->bigInteger('biaya');
+            $table->bigInteger('status_transaksi');
             $table->timestamps();
         });
     }

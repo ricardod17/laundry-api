@@ -17,7 +17,6 @@ class CreateJasa extends Migration
             $table->increments('id');
             $table->string('nama_jasa');
             $table->bigInteger('biaya_jasa');
-            $table->bigInteger('status_jasa');
             $table->timestamps();
         });
     }
