@@ -12,8 +12,8 @@ API Laundry dibuat dengan menggunakan
 ## About App
 <b>About App</b>
 Aplikasi ini dibuat untuk mendukung proses operasional Laundry, masi terdapat beberapa kekurangan yang dapat dilakukan improvement, aplikasi dibangun dengan Laravel 8.4 dengan PHP 7.X. Aplikasi ini terdapat beberapa module, yaitu :
-- Jasa, CRUD berupa membuat produk seperti Laundry Kiloan beserta harganya.
-- Transaksi, untuk membuat transaksi yang dapat dilakukan oleh pengguna. Admin dapat melakukan update status menjadi Processing.
+- Product, CRUD berupa membuat produk seperti Laundry Kiloan beserta harganya.
+- Transcation, untuk membuat Transcation yang dapat dilakukan oleh pengguna. Admin dapat melakukan update status menjadi Processing.
 - User, untuk dapat melakukan CRUD terhadap User Management yang memiliki Role, dan User
 
 - Login, dapat melakukan login dengan JWT Authentication menggunakan bearer token.
@@ -29,18 +29,18 @@ Aplikasi masih memiliki kekurangan dari sisi role management karena saya mengala
 - PHP artisan db:seed
 - PHP artisan serve
 - go to localhost:8000/api
-- API : Jasa/Transaksi/User
+- API : Product/Transcation/User
 
 Login / Register :
 - Method POST utk login : localhost:8000/login
 - Method POST utk register : localhost:8000/register
 - Lalu copy authenticated token untuk dapat mengakses module.
 
-Jasa / Transaksi / Users (perlu login):
-- Method GET utk meretrieve data : localhost:8000/api/jasa/1
-- Method POST utk mencreate data : localhost:8000/api/jasa/
-- Method POST utk mengupdate data : localhost:8000/api/jasa/1
-- Method DELETE utk menghapus data : localhost:8000/api/jasa/1
+Product / Transcation / Users (perlu login):
+- Method GET utk meretrieve data : localhost:8000/api/product/1
+- Method POST utk mencreate data : localhost:8000/api/product/
+- Method POST utk mengupdate data : localhost:8000/api/product/1
+- Method DELETE utk menghapus data : localhost:8000/api/product/1
 
 ## About Laravel
 <b>About Laravel</b>
