@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJasa extends Migration
+class CreateProduct extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateJasa extends Migration
      */
     public function up()
     {
-        Schema::create('jasa', function (Blueprint $table) {
+        Schema::create('product', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_jasa');
-            $table->bigInteger('biaya_jasa');
+            $table->string('product_name');
+            $table->bigInteger('product_price');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateJasa extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jasa');
+        Schema::dropIfExists('product');
     }
 }

@@ -5,8 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
-class JasaSeeder extends Seeder
+class TransactionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,21 +16,21 @@ class JasaSeeder extends Seeder
     {
         $date = Carbon::now()->modify('-2 year');
         $createdDate = clone($date);
-        DB::table('jasa')->insert([
-        	'nama_jasa' => 'Laundry Kiloan (Cuci)',
-        	'biaya_jasa' => 5000,
+        DB::table('transaction')->insert([
+        	'customerid' => 2,
+        	'productid' => 2,
+        	'total_item' => 2,
+        	'price' => 10000,
+        	'status_transaction' => 0,
             'created_at' => $createdDate,
             'updated_at' => $createdDate,
         ]);
-        DB::table('jasa')->insert([
-        	'nama_jasa' => 'Laundry Kiloan (Gosok)',
-        	'biaya_jasa' => 9000,
-            'created_at' => $createdDate,
-            'updated_at' => $createdDate,
-        ]);
-        DB::table('jasa')->insert([
-        	'nama_jasa' => 'Laundry Premium (Pcs)',
-        	'biaya_jasa' => 15000,
+        DB::table('transaction')->insert([
+        	'customerid' => 1,
+        	'productid' => 4,
+        	'total_item' => 1,
+        	'price' => 25000,
+            'status_transaction' => 1,
             'created_at' => $createdDate,
             'updated_at' => $createdDate,
         ]);

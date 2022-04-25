@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaksi extends Model
+class Transaction extends Model
 {
     use HasFactory;
-    protected $table="transaksi";
+    protected $table="transaction";
     protected $fillable = [
-        'customerid','jasaid','jlh_item','biaya','status_transaksi',
+        'customerid','productid','total_item','price','status_transaction',
     ];
 }

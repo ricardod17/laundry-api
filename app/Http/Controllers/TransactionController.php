@@ -1,23 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Jasa;
+use App\Models\Transaction;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Illuminate\Support\Facades\DB;
-
-class JasaController extends Controller
+class TransactionController extends Controller
 {
+    
     public function index()
     {
-        $Jasa = Jasa::orderBy('updated_at', 'DESC')->paginate(5);
+        $Transaction = Transaction::orderBy('updated_at', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
-            'data' => $Jasa,
+            'data' => $Transaction,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
@@ -25,8 +24,11 @@ class JasaController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "nama_jasa" => ['required'],
-            "biaya_jasa" => ['required'],
+            "customerid" => ['required'],
+            "productid" => ['required'],
+            "total_item" => ['required'],
+            "price" => ['required'],
+            "status_transaction" => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -37,11 +39,11 @@ class JasaController extends Controller
         }
 
         try {
-            $Jasa = Jasa::create($request->all());
+            $Transaction = Transaction::create($request->all());
 
             $response = [
                 'message' => 'Data successfully saved.',
-                'data' => $Jasa,
+                'data' => $Transaction,
             ];
 
             return response()->json($response, HttpFoundationResponse::HTTP_CREATED);
@@ -54,22 +56,25 @@ class JasaController extends Controller
 
     public function view($id)
     {
-        $Jasa = Jasa::where('id', $id)->firstOrFail();
-        if (is_null($Jasa)) {
+        $Transaction = Transaction::where('id', $id)->firstOrFail();
+        if (is_null($Transaction)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $Jasa,
+            "data" => $Transaction,
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "nama_jasa" => ['required'],
-            "biaya_jasa" => ['required'],
+            "customerid" => ['required'],
+            "productid" => ['required'],
+            "total_item" => ['required'],
+            "price" => ['required'],
+            "status_transaction" => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -78,19 +83,28 @@ class JasaController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $Jasa = Jasa::find($id);
-        $Jasa->update($request->all());
-
+        $Transaction = Transaction::find($id);
+        $Transaction->update($request->all());
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $Jasa,
+            "data" => $Transaction,
         ]);
     }
 
+    public function status(Request $request, $id)
+    {
+        DB::table('Transaction')->where('id', $request->id)->update([
+            'status_transaction' => '1',
+            ]);
+        return response()->json([
+            "success" => true,
+            "message" => "Data updated as Completed.",
+        ]);
+    }
     public function delete($id)
     {
-        $deletedRows = Jasa::where('id', $id)->delete();
+        $deletedRows = Transaction::where('id', $id)->delete();
         return response()->json([
             "success" => true,
             "message" => "Data successfully deleted.",

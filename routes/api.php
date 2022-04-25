@@ -2,10 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\JasaController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +16,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/auth', function (Request $request) {
-    return $request->user();
-});
 Route::get('/', function (Request $request) {
     return response()->json([
         "success" => true,
@@ -38,16 +33,16 @@ Route::get('/user/{id}', [UserController::class, 'view'])->middleware('jwt.verif
 Route::post('/user/{id}', [UserController::class, 'update'])->middleware('jwt.verify');
 Route::delete('/user/{id}', [UserController::class, 'delete'])->middleware('jwt.verify');
 
-Route::get('/jasa', [JasaController::class, 'index'])->middleware('jwt.verify');
-Route::post('/jasa', [JasaController::class, 'create'])->middleware('jwt.verify');
-Route::get('/jasa/{id}', [JasaController::class, 'view'])->middleware('jwt.verify');
-Route::post('/jasa/{id}', [JasaController::class, 'update'])->middleware('jwt.verify');
-Route::delete('/jasa/{id}', [JasaController::class, 'delete'])->middleware('jwt.verify');
+Route::get('/product', [ProductController::class, 'index'])->middleware('jwt.verify');
+Route::post('/product', [ProductController::class, 'create'])->middleware('jwt.verify');
+Route::get('/product/{id}', [ProductController::class, 'view'])->middleware('jwt.verify');
+Route::post('/product/{id}', [ProductController::class, 'update'])->middleware('jwt.verify');
+Route::delete('/product/{id}', [ProductController::class, 'delete'])->middleware('jwt.verify');
 
 
-Route::get('/transaksi', [TransaksiController::class, 'index'])->middleware('jwt.verify');
-Route::post('/transaksi', [TransaksiController::class, 'create'])->middleware('jwt.verify');
-Route::get('/transaksi/{id}', [TransaksiController::class, 'view'])->middleware('jwt.verify');
-Route::post('/transaksi/{id}', [TransaksiController::class, 'update'])->middleware('jwt.verify');
-Route::post('/transaksi/status/{id}', [TransaksiController::class, 'status'])->middleware('jwt.verify');
-Route::delete('/transaksi/{id}', [TransaksiController::class, 'delete'])->middleware('jwt.verify');
+Route::get('/transaction', [TransactionController::class, 'index'])->middleware('jwt.verify');
+Route::post('/transaction', [TransactionController::class, 'create'])->middleware('jwt.verify');
+Route::get('/transaction/{id}', [TransactionController::class, 'view'])->middleware('jwt.verify');
+Route::post('/transaction/{id}', [TransactionController::class, 'update'])->middleware('jwt.verify');
+Route::post('/transaction/status/{id}', [TransactionController::class, 'status'])->middleware('jwt.verify');
+Route::delete('/transaction/{id}', [TransactionController::class, 'delete'])->middleware('jwt.verify');
