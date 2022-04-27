@@ -4,23 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransaction extends Migration
+class CreateCategory extends Migration
 {
-    /**
+   /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('category', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();  
-            $table->bigInteger('customerid');
-            $table->bigInteger('productid');
-            $table->bigInteger('categoryid');
-            $table->bigInteger('total_item');
-            $table->bigInteger('price');
-            $table->bigInteger('status_transaction');
+            $table->string('category_name');
+            $table->bigInteger('category_status');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateTransaction extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction');
+        Schema::dropIfExists('category');
     }
 }

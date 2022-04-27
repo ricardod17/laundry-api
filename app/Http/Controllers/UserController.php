@@ -16,6 +16,7 @@ class UserController extends Controller
     {
         $User = User::orderBy('id', 'DESC')->paginate(5);
         $response = [
+            "success" => true,
             'message' => 'Data is successfully retrieved',
             'data' => $User,
         ];
@@ -94,20 +95,27 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
+                    "success" => false,
                     "message" => "Invalid Email or Password.",
                 ],422);
             }
         } catch (JWTException $e) {
             return response()->json([
+                "success" => false,
                 "message" => "Failed Create Token.",
             ],500);
         }
-
-        return response()->json(compact('token'));
+        $User = User::where('email', $request->only('email'))->firstOrFail();
+        return response()->json([
+            "success" => true,
+            "message" => "Data successfully retrieved.",
+            // "data" => $User,
+            "token" => $token,
+        ]);
+        // return response()->json(compact('token'));
     }
 
     public function register(Request $request)
@@ -135,7 +143,7 @@ class UserController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('user'), 201);
     }
 
     public function getAuthenticatedUser()
@@ -144,23 +152,26 @@ class UserController extends Controller
 
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json([
+                    "success" => false,
                     "message" => "User Not Found.",
                 ],404);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json([
+                "success" => false,
                 "message" => "Token is Expired.",
             ],403);
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json([
+                "success" => false,
                 "message" => "Token is Invalid.",
             ],403);
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json([
+                "success" => false,
                 "message" => "Token is Absent.",
             ],403);
         }
-
         return response()->json(compact('user'));
     }
 }

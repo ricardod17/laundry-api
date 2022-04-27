@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Category;
 use App\Models\Transaction;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\QueryException;
@@ -8,30 +10,42 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Illuminate\Support\Facades\DB;
-class TransactionController extends Controller
+
+class CategoryController extends Controller
 {
-    
     public function index()
     {
-        $Transaction = Transaction::orderBy('updated_at', 'DESC')->paginate(5);
+        $Category = Category::orderBy('updated_at', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
-            'data' => $Transaction,
+            'data' => $Category,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
 
+    public function a()
+    {
+        // $Category = DB::table('category')->join('transaction', 'transaction.categoryid', '=', 'category.id')->orderBy('category.updated_at', 'DESC')->paginate(20);
+        $category = Category::with('transaction')->get();
+        $response = [
+            'message' => 'Data is successfully retrieved',
+            'data' => $category,
+        ];
+        return response()->json($response, HttpFoundationResponse::HTTP_OK);
+    }
+
+    // public function a()
+    // {
+    //     $category = Category::all();
+    //     return view('category', ['category' => $category]);
+    // }
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "customerid" => 'required',
-            "productid" => 'required',
-            "categoryid" => 'required',
-            "total_item" => 'required',
-            "price" => 'required',
-            "status_transaction" => 'required',
+            "category_name" => ['required'],
+            "category_status" => ['required'],
         ]);
-     
 
         if ($validator->fails()) {
             return response()->json(
@@ -39,15 +53,13 @@ class TransactionController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $arr = [];
-        $arr[] = $request->categoryid;
 
-        try {        
-            $Transaction = Transaction::create($request->all());
-            $Transaction->category()->attach($Transaction->id,['category_id' => $request->categoryid]);
+        try {
+            $Category = Category::create($request->all());
+
             $response = [
                 'message' => 'Data successfully saved.',
-                'data' => $Transaction,
+                'data' => $Category,
             ];
 
             return response()->json($response, HttpFoundationResponse::HTTP_CREATED);
@@ -60,26 +72,22 @@ class TransactionController extends Controller
 
     public function view($id)
     {
-        $Transaction = Transaction::where('id', $id)->firstOrFail();
-        if (is_null($Transaction)) {
+        $Category = Category::where('id', $id)->firstOrFail();
+        if (is_null($Category)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $Transaction,
+            "data" => $Category,
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "customerid" => 'required',
-            "productid" => 'required',
-            "categoryid" => 'required',
-            "total_item" => 'required',
-            "price" => 'required',
-            "status_transaction" => 'required',
+            "category_name" => ['required'],
+            "category_status" => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -88,28 +96,19 @@ class TransactionController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $Transaction = Transaction::find($id);
-        $Transaction->update($request->all());
+        $Category = Category::find($id);
+        $Category->update($request->all());
+
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $Transaction,
+            "data" => $Category,
         ]);
     }
 
-    public function status(Request $request, $id)
-    {
-        DB::table('Transaction')->where('id', $request->id)->update([
-            'status_transaction' => '1',
-            ]);
-        return response()->json([
-            "success" => true,
-            "message" => "Data updated as Completed.",
-        ]);
-    }
     public function delete($id)
     {
-        $deletedRows = Transaction::where('id', $id)->delete();
+        $deletedRows = Category::where('id', $id)->delete();
         return response()->json([
             "success" => true,
             "message" => "Data successfully deleted.",

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,6 +40,12 @@ Route::get('/product/{id}', [ProductController::class, 'view'])->middleware('jwt
 Route::post('/product/{id}', [ProductController::class, 'update'])->middleware('jwt.verify');
 Route::delete('/product/{id}', [ProductController::class, 'delete'])->middleware('jwt.verify');
 
+Route::get('/category', [CategoryController::class, 'index'])->middleware('jwt.verify');
+Route::get('/category/a', [CategoryController::class, 'a'])->middleware('jwt.verify');
+Route::post('/category', [CategoryController::class, 'create'])->middleware('jwt.verify');
+Route::get('/category/{id}', [CategoryController::class, 'view'])->middleware('jwt.verify');
+Route::post('/category/{id}', [CategoryController::class, 'update'])->middleware('jwt.verify');
+Route::delete('/category/{id}', [CategoryController::class, 'delete'])->middleware('jwt.verify');
 
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('jwt.verify');
 Route::post('/transaction', [TransactionController::class, 'create'])->middleware('jwt.verify');
