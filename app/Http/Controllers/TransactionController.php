@@ -13,10 +13,10 @@ class TransactionController extends Controller
     
     public function index()
     {
-        $Transaction = Transaction::orderBy('updated_at', 'DESC')->paginate(5);
+        $transaction = Transaction::orderBy('updated_at', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
-            'data' => $Transaction,
+            'data' => $transaction,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
@@ -43,11 +43,11 @@ class TransactionController extends Controller
         $arr[] = $request->categoryid;
 
         try {        
-            $Transaction = Transaction::create($request->all());
-            $Transaction->category()->attach($Transaction->id,['category_id' => $request->categoryid]);
+            $transaction = Transaction::create($request->all());
+            $transaction->category()->attach($transaction->id,['category_id' => $request->categoryid], ['product_id' => $request->productid]);
             $response = [
                 'message' => 'Data successfully saved.',
-                'data' => $Transaction,
+                'data' => $transaction,
             ];
 
             return response()->json($response, HttpFoundationResponse::HTTP_CREATED);
@@ -60,14 +60,14 @@ class TransactionController extends Controller
 
     public function view($id)
     {
-        $Transaction = Transaction::where('id', $id)->firstOrFail();
-        if (is_null($Transaction)) {
+        $transaction = Transaction::where('id', $id)->firstOrFail();
+        if (is_null($transaction)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $Transaction,
+            "data" => $transaction,
         ]);
     }
 
@@ -88,12 +88,12 @@ class TransactionController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $Transaction = Transaction::find($id);
-        $Transaction->update($request->all());
+        $transaction = Transaction::find($id);
+        $transaction->update($request->all());
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $Transaction,
+            "data" => $transaction,
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\category;
 use App\Models\Transaction;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\QueryException;
@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class categoryController extends Controller
 {
     public function index()
     {
-        $Category = Category::orderBy('updated_at', 'DESC')->paginate(5);
+        $category = category::orderBy('updated_at', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
-            'data' => $Category,
+            'data' => $category,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
 
     public function a()
     {
-        // $Category = DB::table('category')->join('transaction', 'transaction.categoryid', '=', 'category.id')->orderBy('category.updated_at', 'DESC')->paginate(20);
-        $category = Category::with('transaction')->get();
+        // $category = DB::table('category')->join('transaction', 'transaction.categoryid', '=', 'category.id')->orderBy('category.updated_at', 'DESC')->paginate(20);
+        $category = category::with('transaction')->get();
         $response = [
             'message' => 'Data is successfully retrieved',
             'data' => $category,
@@ -36,7 +36,7 @@ class CategoryController extends Controller
 
     // public function a()
     // {
-    //     $category = Category::all();
+    //     $category = category::all();
     //     return view('category', ['category' => $category]);
     // }
 
@@ -55,11 +55,11 @@ class CategoryController extends Controller
         }
 
         try {
-            $Category = Category::create($request->all());
+            $category = Category::create($request->all());
 
             $response = [
                 'message' => 'Data successfully saved.',
-                'data' => $Category,
+                'data' => $category,
             ];
 
             return response()->json($response, HttpFoundationResponse::HTTP_CREATED);
@@ -72,14 +72,14 @@ class CategoryController extends Controller
 
     public function view($id)
     {
-        $Category = Category::where('id', $id)->firstOrFail();
-        if (is_null($Category)) {
+        $category = Category::where('id', $id)->firstOrFail();
+        if (is_null($category)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $Category,
+            "data" => $category,
         ]);
     }
 
@@ -96,13 +96,13 @@ class CategoryController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $Category = Category::find($id);
-        $Category->update($request->all());
+        $category = Category::find($id);
+        $category->update($request->all());
 
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $Category,
+            "data" => $category,
         ]);
     }
 

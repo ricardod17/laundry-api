@@ -14,25 +14,25 @@ class UserController extends Controller
 {
     public function index()
     {
-        $User = User::orderBy('id', 'DESC')->paginate(5);
+        $user = User::orderBy('id', 'DESC')->paginate(5);
         $response = [
             "success" => true,
             'message' => 'Data is successfully retrieved',
-            'data' => $User,
+            'data' => $user,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
 
     public function view($id)
     {
-        $User = User::where('id', $id)->firstOrFail();
-        if (is_null($User)) {
+        $user = User::where('id', $id)->firstOrFail();
+        if (is_null($user)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $User,
+            "data" => $user,
         ]);
     }
 
@@ -46,11 +46,11 @@ class UserController extends Controller
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
             ]);
-        $User = User::find($id);
+        $user = User::find($id);
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $User,
+            "data" => $user,
         ]);
     }
     public function create(Request $request)
@@ -108,11 +108,11 @@ class UserController extends Controller
                 "message" => "Failed Create Token.",
             ],500);
         }
-        $User = User::where('email', $request->only('email'))->firstOrFail();
+        $user = User::where('email', $request->only('email'))->firstOrFail();
         return response()->json([
             "success" => true,
             "message" => "Data successfully retrieved.",
-            // "data" => $User,
+            // "data" => $user,
             "token" => $token,
         ]);
         // return response()->json(compact('token'));

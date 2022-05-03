@@ -14,10 +14,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $Product = Product::orderBy('updated_at', 'DESC')->paginate(5);
+        $product = Product::orderBy('updated_at', 'DESC')->paginate(5);
         $response = [
             'message' => 'Data is successfully retrieved',
-            'data' => $Product,
+            'data' => $product,
         ];
         return response()->json($response, HttpFoundationResponse::HTTP_OK);
     }
@@ -37,11 +37,11 @@ class ProductController extends Controller
         }
 
         try {
-            $Product = Product::create($request->all());
+            $product = Product::create($request->all());
 
             $response = [
                 'message' => 'Data successfully saved.',
-                'data' => $Product,
+                'data' => $product,
             ];
 
             return response()->json($response, HttpFoundationResponse::HTTP_CREATED);
@@ -54,14 +54,14 @@ class ProductController extends Controller
 
     public function view($id)
     {
-        $Product = Product::where('id', $id)->firstOrFail();
-        if (is_null($Product)) {
+        $product = Product::where('id', $id)->firstOrFail();
+        if (is_null($product)) {
             return $this->sendError('Data not found.');
         }
         return response()->json([
             "success" => true,
             "message" => "Data is successfully retrieved",
-            "data" => $Product,
+            "data" => $product,
         ]);
     }
 
@@ -78,13 +78,13 @@ class ProductController extends Controller
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $Product = Product::find($id);
-        $Product->update($request->all());
+        $product = Product::find($id);
+        $product->update($request->all());
 
         return response()->json([
             "success" => true,
             "message" => "Data successfully updated.",
-            "data" => $Product,
+            "data" => $product,
         ]);
     }
 
